@@ -86,14 +86,36 @@ class Field {
             this._field[curRow][curCol + 1] = '*'
         }
     }
+
+    static generateField(height, width, percentage) {
+        const newField = [];
+        for (let i = 0; i < height; i++) {
+            const newRow = [];
+            for (let n = 0; n < width; n ++) {
+                if (Math.random() * 100 >= percentage) {
+                    newRow.push('░');
+                } else {
+                    newRow.push('O');
+                }
+            }
+            newField.push(newRow);
+        }
+        newField[0][0] = '*';
+        let goalRow = Math.floor(Math.random() * height);
+        while (goalRow == 0) {
+            goalRow = Math.floor(Math.random() * height);
+        }
+        let goalCol = Math.floor(Math.random() * width);
+        while (goalCol == 0) {
+            goalCol = Math.floor(Math.random() * width);
+        }
+        newField[goalRow][goalCol] = '^';
+        return newField;
+    }
 }
 
 
-const myField = new Field([
-    ['*', '░', 'O'],
-    ['░', 'O', '░'],
-    ['░', '^', '░'],
-  ]);
+const myField = new Field(Field.generateField(5, 5, 20));
 
 console.log('Use \"w, a, s, d\" keys to move yourself. Your goal is to get to the hat \"^\".');
 
